@@ -1,9 +1,11 @@
 module.exports = {
+  mode: "jit",
   content: ["./src/**/*.{js,ts,jsx,tsx}", "./src/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
-        lightGray: "#767676",
+        primary: "#349AC0",
+        secondary: "#E2D6AF",
       },
     },
     screens: {
