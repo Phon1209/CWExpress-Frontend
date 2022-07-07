@@ -30,7 +30,7 @@ const Machine = () => {
     //   });
     // Set temporary machineData
     setMachineData({
-      _id: 2,
+      _id: machineID,
       location: "Chachoengsao",
       branch: "PTT-TV",
       machineNumber: 1,

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Machine from "./components/machine/machine";
+import Payment from "./components/payment/payment";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
               element={<h1 className="text-3xl text-center">สวัสดี</h1>}
             />
             <Route path="/:machineID" element={<Machine />} />
-            <Route path="/payment" element={<div>Payment</div>} />
+            <Route path="/payment" element={<Payment />} />
             <Route path="*" />
           </Routes>
         </main>
