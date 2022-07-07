@@ -23,7 +23,7 @@
   min-width: 113px;
 }
 
-.btn-filled {
+.btn-fill {
   @apply bg-primary;
   color: white;
 }
@@ -35,4 +35,8 @@
 
 .page-header {
   @apply font-semibold text-center text-xl leading-6;
+}
+
+.paymentChoice svg {
+  @apply text-2xl;
 }

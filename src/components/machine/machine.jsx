@@ -55,7 +55,7 @@ const Machine = () => {
               <button className="btn btn-text">ยกเลิก</button>
             </Link>
             <button
-              className="btn btn-filled"
+              className="btn btn-fill"
               onClick={() => {
                 navigate("/payment", { state: { ...machineData } });
               }}
