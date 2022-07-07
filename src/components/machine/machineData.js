@@ -3,19 +3,13 @@ import PropTypes from "prop-types";
 
 const MachineData = ({ _id, location, branch, machineNumber }) => {
   return (
-    <div className="flex flex-col text-center bg-white rounded-xl py-4">
-      <h1 className="block p-4">
-        Machine ID: <span>{_id}</span>
-      </h1>
-      <p className="block">
-        สาขา:{" "}
-        <span>
-          {location} - {branch}
-        </span>
-      </p>
-      <p className="block">
-        หมายเลขเครื่อง: <span>{machineNumber}</span>
-      </p>
+    <div className="grid grid-cols-2 grid-rows-3 gap-y-1 gap-x-5 mt-8 mb-4">
+      <div className="text-right text-[#325D67]">จังหวัด</div>
+      <div className="text-left">{location}</div>
+      <div className="text-right text-[#325D67]">สาขา</div>
+      <div className="text-left">{branch}</div>
+      <div className="text-right text-[#325D67]">หมายเลขเครื่อง</div>
+      <div className="text-left">{machineNumber}</div>
     </div>
   );
 };

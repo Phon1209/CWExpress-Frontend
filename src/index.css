@@ -3,11 +3,36 @@
 @tailwind utilities;
 
 * {
-  font-family: "Noto Sans Thai", "Quicksand", sans-serif;
+  font-family: "Inter", "Noto Sans Thai", sans-serif;
 }
 
 :root {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  --primary-color: #325d67;
+}
+
+.container {
+  @apply mt-6 pt-6 pb-10 px-8 h-full w-full;
+  max-width: 1100px;
+}
+
+.btn {
+  @apply flex justify-center items-center py-2 px-3 rounded-md;
+  min-width: 113px;
+}
+
+.btn-filled {
+  @apply bg-primary;
+  color: white;
+}
+
+.btn-text {
+  background-color: transparent;
+  @apply text-primary600;
+}
+
+.page-header {
+  @apply font-semibold text-center text-xl leading-6;
 }
