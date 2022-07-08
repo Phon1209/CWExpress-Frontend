@@ -22,7 +22,7 @@ function App() {
               index
               element={<h1 className="text-3xl text-center">สวัสดี</h1>}
             />
-            <Route path="/:machineID" element={<Machine />} />
+            <Route path="/machines/:machineID" element={<Machine />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="*" />
           </Routes>
