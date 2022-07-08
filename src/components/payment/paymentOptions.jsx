@@ -19,7 +19,7 @@ const PaymentOptions = ({ paymentChoice, payChoice, setPayChoice }) => {
             <label
               className={`flex flex-col items-center justify-around p-4 rounded-md border-2
                         ${
-                          payChoice.name === choice.name
+                          payChoice?.name === choice.name
                             ? "bg-primary text-white"
                             : ""
                         }`}
@@ -27,7 +27,9 @@ const PaymentOptions = ({ paymentChoice, payChoice, setPayChoice }) => {
               {choice.icon}
               <p
                 className={`${
-                  payChoice.name === choice.name ? "text-white" : "text-primary"
+                  payChoice?.name === choice.name
+                    ? "text-white"
+                    : "text-primary"
                 } pt-1`}
               >
                 {choice.name}

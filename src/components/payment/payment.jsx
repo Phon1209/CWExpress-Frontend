@@ -31,8 +31,8 @@ const Payment = () => {
         <div className="mr-5">รหัสประจำเครื่อง</div>
         <p>{_id}</p>
       </section>
-      <AmountSelect setAmount={setAmount} amount={amount}></AmountSelect>
-      <section className="w-full">
+      <AmountSelect setAmount={setAmount} amount={amount} />
+      <section className="w-full mb-4">
         <header className="font-medium text-lg leading-5 my-3">
           ช่องทางชำระเงิน
         </header>
@@ -42,7 +42,15 @@ const Payment = () => {
           setPayChoice={setPayChoice}
         />
       </section>
-      <div className="btn btn-fill w-full mt-auto">ยืนยัน</div>
+      <div
+        className="btn btn-fill w-full mt-auto"
+        onClick={() => {
+          if (payChoice !== null && amount !== null && amount !== 0)
+            payChoice.action(amount);
+        }}
+      >
+        ยืนยัน
+      </div>
     </div>
   );
 };
