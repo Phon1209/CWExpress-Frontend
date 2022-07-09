@@ -4,13 +4,34 @@ import { BiMailSend } from "react-icons/bi";
 
 const qrcode = (amount) => {
   console.log("Creating QR for ", amount);
+
+  const data = JSON.stringify({
+    amount: 20,
+  });
+
+  const config = {
+    method: "post",
+    url: `${process.env.REACT_APP_CWEX_URL}/cwex/v1/pay/scb/qr`,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: data,
+  };
+
+  axios(config)
+    .then(function (response) {
+      console.log(response.data.qrImage);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 };
 
 // For testing purpose only
 const instant = (amount) => {
   console.log("calling for ", amount);
 
-  var data = JSON.stringify({
+  const data = JSON.stringify({
     payeeAccountNumber: "0987654321",
     sendingBankCode: "014",
     receivingBankCode: "014",
@@ -24,9 +45,9 @@ const instant = (amount) => {
     bypass: true,
   });
 
-  var config = {
+  const config = {
     method: "post",
-    url: "http://127.0.0.1:7000/cwex/v1/pay/scb/confirm",
+    url: `${process.env.REACT_APP_CWEX_URL}/cwex/v1/pay/scb/confirm`,
     headers: {
       "Content-Type": "application/json",
     },
