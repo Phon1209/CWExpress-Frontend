@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import MachineData from "./machineData";
 import Loading from "../utils/loading";
 import PageHeader from "../layouts/pageHeader";
 import Button from "../utils/button";
+import Information from "../layouts/information";
 
 const Machine = () => {
   // extract params from the URL
@@ -43,7 +43,13 @@ const Machine = () => {
           <sub className="font-normal text-lg m-8 mb-2">
             คุณต้องการใช้เครื่องนี้ใช่ไหม
           </sub>
-          <MachineData {...machineData} />
+          <Information
+            datas={[
+              { title: "จังหวัด", content: machineData.location },
+              { title: "สาขา", content: machineData.branch },
+              { title: "หมายเลขเครื่อง", content: machineData.machineNumber },
+            ]}
+          />
           <div className="mt-auto flex justify-around w-full max-w-md">
             <Link to="/">
               <Button classes="btn-text" content="ยกเลิก" />
