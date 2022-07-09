@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Machine from "./components/machine/machine";
+import ConfirmationPage from "./components/payment/confirmation";
 import Payment from "./components/payment/payment";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
               <Route path=":machineID" element={<Machine />} />
             </Route>
             <Route path="payment" element={<Payment />} />
+            <Route path="confirm" element={<ConfirmationPage />} />
             <Route path="*" />
           </Routes>
         </main>
