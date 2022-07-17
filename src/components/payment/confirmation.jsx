@@ -1,13 +1,22 @@
 import React from "react";
+import { Navigate, useLocation } from "react-router";
 import Information from "../layouts/information";
 import PageHeader from "../layouts/pageHeader";
 import { IoArrowBack } from "react-icons/io5";
+import { useAppContext } from "../../context/appContext";
 
 const ConfirmationPage = (props) => {
   console.log("Rendering Confirmation Page");
 
   // @TODO: SSE to redirect to success page
+
   // @TODO: request QR code
+  const { machine, payment } = useAppContext();
+  const state = useLocation();
+  console.log(state);
+  if (machine === null || payment === null) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <div
@@ -32,7 +41,7 @@ const ConfirmationPage = (props) => {
         ]}
         // titleColor={}
       />
-      <p className="my-8 text-center">โปรดชำระเงินภายใน {234} วินาที</p>
+      <p className="my-auto text-center">โปรดชำระเงินภายใน {234} วินาที</p>
     </div>
   );
 };

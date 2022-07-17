@@ -1,6 +1,6 @@
 import { createContext, useReducer, useEffect, useContext } from "react";
 import { Axios, ssEvents } from "../config/config";
-import { LOADING, SET_MACHINE } from "./actions";
+import { LOADING, SET_MACHINE, SET_PAYMENT } from "./actions";
 import { appReducer } from "./appReducer";
 
 const initialState = {
@@ -49,9 +49,33 @@ const AppProvider = (props) => {
         dispatch({ type: SET_MACHINE, payload: { machine: null } });
       });
   };
+  const setMachine = (machine) => {
+    dispatch({ type: SET_MACHINE, payload: { machine } });
+  };
+
+  const setPayChoice = (choice) => {
+    dispatch({
+      type: SET_PAYMENT,
+      payload: { payment: { name: choice.name, action: choice.action } },
+    });
+  };
+  const setAmount = (amount) => {
+    dispatch({
+      type: SET_PAYMENT,
+      payload: { payment: { amount } },
+    });
+  };
 
   return (
-    <AppContext.Provider value={{ ...state, getMachine }}>
+    <AppContext.Provider
+      value={{
+        ...state,
+        getMachine,
+        setMachine,
+        setPayChoice,
+        setAmount,
+      }}
+    >
       {props.children}
     </AppContext.Provider>
   );

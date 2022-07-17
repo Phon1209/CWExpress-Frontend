@@ -12,7 +12,11 @@ export const appReducer = (state, action) => {
       return { ...state, isLoading: false, machine };
     case SET_PAYMENT:
       const { payment } = action.payload;
-      return { ...state, isLoading: false, payment };
+      return {
+        ...state,
+        isLoading: false,
+        payment: { ...state.payment, ...payment },
+      };
     case PAYMENT_SUCCESS:
       return { ...state };
     case PAYMENT_FAIL:

@@ -1,7 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import paymentChoice from "./paymentChoice";
+import { useAppContext } from "../../context/appContext";
 
-const PaymentOptions = ({ paymentChoice, payChoice, setPayChoice }) => {
+const PaymentOptions = ({ currentChoice }) => {
+  const { setPayChoice } = useAppContext();
+
   return (
     <div className="grid grid-rows-2 grid-cols-3 w-full gap-2">
       {paymentChoice.map((choice, index) => {
@@ -19,7 +23,7 @@ const PaymentOptions = ({ paymentChoice, payChoice, setPayChoice }) => {
             <label
               className={`flex flex-col items-center justify-around p-4 rounded-md border-2
                         ${
-                          payChoice?.name === choice.name
+                          currentChoice === choice.name
                             ? "bg-primary text-white"
                             : ""
                         }`}
@@ -27,9 +31,7 @@ const PaymentOptions = ({ paymentChoice, payChoice, setPayChoice }) => {
               {choice.icon}
               <p
                 className={`${
-                  payChoice?.name === choice.name
-                    ? "text-white"
-                    : "text-primary"
+                  currentChoice === choice.name ? "text-white" : "text-primary"
                 } pt-1`}
               >
                 {choice.name}

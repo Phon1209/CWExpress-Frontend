@@ -1,22 +1,30 @@
-import React, { useState } from "react";
-import { useLocation, Navigate } from "react-router";
+import React, { useEffect } from "react";
+import { useLocation, Navigate, useNavigate } from "react-router";
 import AmountSelect from "./amountSelect";
-import paymentChoice from "./paymentChoice";
 import PaymentOptions from "./paymentOptions";
 import PageHeader from "../layouts/pageHeader";
 import Button from "../utils/button";
+import { useAppContext } from "../../context/appContext";
 
 const Payment = () => {
   console.log("rendering payment");
 
   const { state } = useLocation();
-  const [amount, setAmount] = useState(null);
-  const [payChoice, setPayChoice] = useState(null);
 
-  // Back to firt page if not come from machine confirmation page
+  const { payment, setAmount, setMachine } = useAppContext();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (state !== null) setMachine(state);
+    // eslint-disable-next-line
+  }, [state]);
+
+  // Back to first page if not come from machine confirmation page
   if (state === null) {
     return <Navigate to="/" replace />;
   }
+
   const { _id, machineNumber } = state;
 
   return (
@@ -31,23 +39,32 @@ const Payment = () => {
         <div className="mr-5">รหัสประจำเครื่อง</div>
         <p>{_id}</p>
       </section>
-      <AmountSelect setAmount={setAmount} amount={amount} />
+      <AmountSelect setAmount={setAmount} amount={payment?.amount} />
       <section className="w-full mb-4">
         <header className="font-medium text-lg leading-5 my-3">
           ช่องทางชำระเงิน
         </header>
-        <PaymentOptions
-          paymentChoice={paymentChoice}
-          payChoice={payChoice}
-          setPayChoice={setPayChoice}
-        />
+        <PaymentOptions currentChoice={payment?.name} />
       </section>
       <Button
         content="ยืนยัน"
         classes="btn-fill w-full mt-auto"
         onClick={() => {
-          if (payChoice !== null && amount !== null && amount !== 0)
-            payChoice.action(amount);
+          if (
+            payment !== null &&
+            payment.name !== null &&
+            payment.name !== undefined &&
+            payment.amount !== null &&
+            payment.amount !== undefined &&
+            +payment.amount !== 0
+          ) {
+            console.log(payment.name);
+            console.log(payment.amount);
+            navigate("/confirm", { state: { _id } });
+          } else {
+            // @TODO: change this to nice alert
+            alert("Please specify");
+          }
         }}
       />
     </div>
