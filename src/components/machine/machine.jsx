@@ -16,6 +16,7 @@ const Machine = () => {
   const navigate = useNavigate();
   useEffect(() => {
     getMachine(machineID);
+    // eslint-disable-next-line
   }, [machineID]);
 
   return isLoading ? (
