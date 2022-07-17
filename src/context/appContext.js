@@ -1,5 +1,6 @@
 import { createContext, useReducer, useEffect, useContext } from "react";
-import { ssEvents } from "../config/config";
+import { Axios, ssEvents } from "../config/config";
+import { LOADING, SET_MACHINE } from "./actions";
 import { appReducer } from "./appReducer";
 
 const initialState = {
@@ -13,6 +14,7 @@ export const AppContext = createContext(initialState);
 const AppProvider = (props) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
+  // Set up sse functions
   useEffect(() => {
     // add event
     ssEvents.addEventListener("message", (e) => {
@@ -34,8 +36,22 @@ const AppProvider = (props) => {
     // eslint-disable-next-line
   }, []);
 
+  // Get Machine
+  const getMachine = async (machineID) => {
+    dispatch({ type: LOADING });
+
+    const link = `/machines/${machineID}`;
+    await Axios.get(link)
+      .then((res) => {
+        dispatch({ type: SET_MACHINE, payload: { machine: res.data } });
+      })
+      .catch((err) => {
+        dispatch({ type: SET_MACHINE, payload: { machine: null } });
+      });
+  };
+
   return (
-    <AppContext.Provider value={{ state, dispatch }}>
+    <AppContext.Provider value={{ ...state, getMachine }}>
       {props.children}
     </AppContext.Provider>
   );

@@ -1,13 +1,13 @@
 import {
-  GET_MACHINE,
   SET_PAYMENT,
   PAYMENT_FAIL,
   PAYMENT_SUCCESS,
+  SET_MACHINE,
 } from "./actions";
 
 export const appReducer = (state, action) => {
   switch (action.type) {
-    case GET_MACHINE:
+    case SET_MACHINE:
       const { machine } = action.payload;
       return { ...state, isLoading: false, machine };
     case SET_PAYMENT:
