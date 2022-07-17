@@ -1,4 +1,4 @@
-import axios from "axios";
+import { Axios } from "../../config/config";
 import { MdOutlineQrCodeScanner } from "react-icons/md";
 import { BiMailSend } from "react-icons/bi";
 
@@ -6,19 +6,19 @@ const qrcode = (amount) => {
   console.log("Creating QR for ", amount);
 
   const data = JSON.stringify({
-    amount: 20,
+    amount,
   });
 
   const config = {
     method: "post",
-    url: `${process.env.REACT_APP_CWEX_URL}/cwex/v1/pay/scb/qr`,
+    url: `/pay/scb/qr`,
     headers: {
       "Content-Type": "application/json",
     },
     data: data,
   };
 
-  axios(config)
+  Axios(config)
     .then(function (response) {
       console.log(response.data.qrImage);
     })
@@ -47,14 +47,14 @@ const instant = (amount) => {
 
   const config = {
     method: "post",
-    url: `${process.env.REACT_APP_CWEX_URL}/cwex/v1/pay/scb/confirm`,
+    url: `/pay/scb/confirm`,
     headers: {
       "Content-Type": "application/json",
     },
     data: data,
   };
 
-  axios(config)
+  Axios(config)
     .then(function (response) {
       console.log(JSON.stringify(response.data));
     })

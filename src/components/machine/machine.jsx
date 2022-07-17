@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Axios } from "../../config/config";
 import Loading from "../utils/loading";
 import PageHeader from "../layouts/pageHeader";
 import Button from "../utils/button";
@@ -17,10 +17,9 @@ const Machine = () => {
 
   useEffect(() => {
     setLoading(true);
-    const link = `${process.env.REACT_APP_CWEX_URL}/cwex/v1/machines/${machineID}`;
+    const link = `/machines/${machineID}`;
     console.log(link);
-    axios
-      .get(link)
+    Axios.get(link)
       .then((res) => {
         setLoading(false);
         setMachineData(res.data);
