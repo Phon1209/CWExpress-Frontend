@@ -1,0 +1,4 @@
+export const GET_MACHINE = "GET_MACHINE";
+export const SET_PAYMENT = "SET_PAYMENT";
+export const PAYMENT_SUCCESS = "PAYMENT_SUCCESS";
+export const PAYMENT_FAIL = "PAYMENT_FAIL";
