@@ -8,4 +8,3 @@ const SERVER_URL =
 export const Axios = axios.create({ baseURL: `${SERVER_URL}/cwex/v1` });
 
 export const STREAM_URL = `${SERVER_URL}/cwex/v1/stream`;
-export const ssEvents = new EventSource(STREAM_URL);
