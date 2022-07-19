@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useLocation } from "react-router";
+import { Navigate, useLocation, useNavigate } from "react-router";
 import Information from "../layouts/information";
 import PageHeader from "../layouts/pageHeader";
 import { IoArrowBack } from "react-icons/io5";
 import { useAppContext } from "../../context/appContext";
 import { STREAM_URL } from "../../config/config";
 import Loading from "../utils/loading";
-import { Countdown } from "../utils/countdown";
+import Countdown from "../utils/countdown";
 
 const ConfirmationPage = (props) => {
   console.log("Rendering Confirmation Page");
@@ -16,6 +16,7 @@ const ConfirmationPage = (props) => {
   const { _id } = state;
 
   const [information, setInformation] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let QRgenerated = false;
@@ -98,7 +99,12 @@ const ConfirmationPage = (props) => {
             // titleColor={}
           />
           <p className="my-auto text-center">
-            โปรดชำระเงินภายใน <Countdown startTime={300} /> วินาที
+            โปรดชำระเงินภายใน{" "}
+            <Countdown
+              startTime={300}
+              endCallback={() => navigate(`/machines/${_id}`)}
+            />{" "}
+            วินาที
           </p>
         </>
       )}
