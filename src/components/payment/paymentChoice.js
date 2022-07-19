@@ -2,10 +2,11 @@ import { Axios } from "../../config/config";
 import { MdOutlineQrCodeScanner } from "react-icons/md";
 import { BiMailSend } from "react-icons/bi";
 
-const qrcode = (amount) => {
+const qrcode = (machineID, amount) => {
   console.log("Creating QR for ", amount);
 
   const data = JSON.stringify({
+    machineID,
     amount,
   });
 
@@ -18,9 +19,9 @@ const qrcode = (amount) => {
     data: data,
   };
 
-  Axios(config)
+  return Axios(config)
     .then(function (response) {
-      console.log(response.data.qrImage);
+      return response.data;
     })
     .catch(function (error) {
       console.log(error);
