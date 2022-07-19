@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import Machine from "./components/machine/machine";
-import ConfirmationPage from "./components/payment/confirmation";
-import Payment from "./components/payment/payment";
 import AppProvider from "./context/appContext";
+import Machine from "./components/machine/machine";
+import Payment from "./components/payment/payment";
+import ConfirmationPage from "./components/payment/confirmation";
+import Success from "./components/payment/success";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
               </Route>
               <Route path="payment" element={<Payment />} />
               <Route path="confirm" element={<ConfirmationPage />} />
+              <Route path="success" element={<Success />} />
               <Route path="*" />
             </Routes>
           </main>
