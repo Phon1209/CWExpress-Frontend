@@ -7,8 +7,6 @@ import Button from "../utils/button";
 import { useAppContext } from "../../context/appContext";
 
 const Payment = () => {
-  console.log("rendering payment");
-
   const { state } = useLocation();
 
   const { payment, setAmount, setMachine } = useAppContext();

@@ -10,7 +10,6 @@ const AmountSelect = ({ setAmount, amount }) => {
         id="amount"
         value={amount ? amount : ""}
         onChange={(e) => {
-          console.log(amount);
           setAmount(e.target.value);
         }}
         placeholder="เริ่มต้นที่ 1 บาท"
