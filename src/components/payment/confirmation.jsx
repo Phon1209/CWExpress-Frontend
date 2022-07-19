@@ -47,12 +47,26 @@ const ConfirmationPage = (props) => {
       console.log("SSE opened!");
     });
 
-    source.addEventListener(`transaction-${information.refs.ref2}`, (e) => {
-      console.log(e);
-    });
-
     source.addEventListener("message", (e) => {
-      console.log(e);
+      const transactionResponse = e.data;
+      const transactionData = JSON.parse(transactionResponse);
+      console.log(transactionData);
+
+      if (transactionData && information) {
+        if (+transactionData.amount !== +information.amount) {
+          return;
+        }
+        if (transactionData.ref1 !== information.refs.ref1) {
+          return;
+        }
+        if (transactionData.ref2 !== information.refs.ref2) {
+          return;
+        }
+        if (transactionData.ref3 !== "CWEX") {
+          return;
+        }
+        navigate("/success", { replace: true });
+      }
     });
 
     source.addEventListener("error", (e) => {
@@ -63,10 +77,11 @@ const ConfirmationPage = (props) => {
     return () => {
       source.close();
     };
-  }, [information]);
+  }, [information, navigate]);
 
   console.log("isLoading: ", isLoading);
 
+  // Rendering
   if (machine === null || payment === null) {
     return <Navigate to="/machines/2" replace />;
     // return <Navigate to="/" replace />;
