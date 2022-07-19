@@ -1,40 +1,26 @@
-import { createContext, useReducer, useEffect, useContext } from "react";
-import { Axios, ssEvents } from "../config/config";
-import { LOADING, SET_MACHINE, SET_PAYMENT } from "./actions";
+import { createContext, useReducer, useContext } from "react";
+import { Axios } from "../config/config";
+import {
+  LOADING,
+  PAYMENT_FAIL,
+  SET_MACHINE,
+  SET_PAYMENT,
+  SET_RESPONSE,
+} from "./actions";
 import { appReducer } from "./appReducer";
 
 const initialState = {
   isLoading: true,
   machine: null,
   payment: null,
+  error: null,
+  responseData: null,
 };
 
 export const AppContext = createContext(initialState);
 
 const AppProvider = (props) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
-
-  // Set up sse functions
-  useEffect(() => {
-    // add event
-    ssEvents.addEventListener("message", (e) => {
-      console.log("Incoming: ", e);
-    });
-
-    // listen to open event
-    ssEvents.onopen = (e) => {
-      console.log(e);
-    };
-    // listen to error event
-    ssEvents.onerror = (e) => {
-      console.log(e);
-    };
-
-    return () => {
-      ssEvents.close();
-    };
-    // eslint-disable-next-line
-  }, []);
 
   // Get Machine
   const getMachine = async (machineID) => {
@@ -66,6 +52,18 @@ const AppProvider = (props) => {
     });
   };
 
+  const executeAction = async (action, machineID, amount) => {
+    dispatch({ type: LOADING });
+
+    try {
+      const data = await action(machineID, amount);
+      dispatch({ type: SET_RESPONSE, payload: data });
+      return data;
+    } catch (err) {
+      dispatch({ type: PAYMENT_FAIL, payload: err });
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -74,6 +72,7 @@ const AppProvider = (props) => {
         setMachine,
         setPayChoice,
         setAmount,
+        executeAction,
       }}
     >
       {props.children}
