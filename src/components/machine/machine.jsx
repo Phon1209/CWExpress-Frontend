@@ -17,7 +17,7 @@ const Machine = () => {
   useEffect(() => {
     getMachine(machineID);
     // eslint-disable-next-line
-  }, [machineID]);
+  }, []);
 
   return isLoading ? (
     <Loading />

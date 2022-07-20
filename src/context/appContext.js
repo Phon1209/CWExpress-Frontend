@@ -24,7 +24,7 @@ const AppProvider = (props) => {
 
   // Get Machine
   const getMachine = async (machineID) => {
-    dispatch({ type: LOADING });
+    setLoading();
 
     const link = `/machines/${machineID}`;
     await Axios.get(link)
@@ -52,8 +52,12 @@ const AppProvider = (props) => {
     });
   };
 
-  const executeAction = async (action, machineID, amount) => {
+  const setLoading = () => {
     dispatch({ type: LOADING });
+  };
+
+  const executeAction = async (action, machineID, amount) => {
+    setLoading();
 
     try {
       const data = await action(machineID, amount);
@@ -72,6 +76,7 @@ const AppProvider = (props) => {
         setMachine,
         setPayChoice,
         setAmount,
+        setLoading,
         executeAction,
       }}
     >

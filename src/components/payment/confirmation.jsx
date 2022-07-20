@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router";
 import Information from "../layouts/information";
 import PageHeader from "../layouts/pageHeader";
@@ -11,36 +11,39 @@ import Countdown from "../utils/countdown";
 const ConfirmationPage = (props) => {
   console.log("Rendering Confirmation Page");
 
-  const { machine, payment, executeAction, isLoading } = useAppContext();
+  const {
+    machine,
+    payment,
+    responseData,
+    executeAction,
+    setLoading,
+    isLoading,
+  } = useAppContext();
   const { state } = useLocation();
   const { _id } = state;
 
-  const [information, setInformation] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    let QRgenerated = false;
-
-    if (machine === null || payment === null) return;
     // @TODO: request QR code
-    if (payment.name === "QRCode") {
-      const fetchQR = async () => {
-        const res = await executeAction(payment.action, _id, payment.amount);
-        if (!QRgenerated) {
-          setInformation(res);
-        }
-      };
-
-      fetchQR().catch(console.error);
+    try {
+      console.log("QRCODE asked");
+      setLoading();
+      executeAction(payment.action, _id, payment.amount);
+    } catch (err) {
+      console.error(err);
     }
-
-    return () => (QRgenerated = true);
     // eslint-disable-next-line
   }, []);
 
+  // /*
   // @TODO: SSE to redirect to success page
   useEffect(() => {
-    if (!information) return;
+    if (!responseData)
+      return () => {
+        console.log("Not open sse");
+      };
+    console.count("Trying to connect to sse");
     const source = new EventSource(STREAM_URL);
 
     source.addEventListener("open", () => {
@@ -52,19 +55,20 @@ const ConfirmationPage = (props) => {
       const transactionData = JSON.parse(transactionResponse);
       console.log(transactionData);
 
-      if (transactionData && information) {
-        if (+transactionData.amount !== +information.amount) {
+      if (transactionData && responseData) {
+        if (+transactionData.amount !== +responseData.amount) {
           return;
         }
-        if (transactionData.ref1 !== information.refs.ref1) {
+        if (transactionData.ref1 !== responseData.refs.ref1) {
           return;
         }
-        if (transactionData.ref2 !== information.refs.ref2) {
+        if (transactionData.ref2 !== responseData.refs.ref2) {
           return;
         }
         if (transactionData.ref3 !== "CWEX") {
           return;
         }
+        if (transactionData.machineID !== _id) return;
         navigate("/success", { replace: true });
       }
     });
@@ -77,16 +81,20 @@ const ConfirmationPage = (props) => {
     return () => {
       source.close();
     };
-  }, [information, navigate]);
+    // eslint-disable-next-line
+  }, [responseData]);
+  // */
 
   console.log("isLoading: ", isLoading);
 
   // Rendering
+  // User refresh the page
   if (machine === null || payment === null) {
-    return <Navigate to="/machines/2" replace />;
-    // return <Navigate to="/" replace />;
+    return <Navigate to={`/machines/${_id}`} replace />;
   }
-  if (isLoading || information === null) return <Loading />;
+
+  // data is being fetched
+  if (isLoading) return <Loading />;
 
   return (
     <div
@@ -97,18 +105,21 @@ const ConfirmationPage = (props) => {
         <IoArrowBack className="text-xl mr-3" />
         <PageHeader content="การจ่ายเงิน" classes="" />
       </div>
-      {information && (
+      {responseData && (
         <>
           <img
             className="my-2 w-64 h-64 bg-black"
-            src={`data:image/png;base64, ${information.base64QR.qrImage}`}
+            src={`data:image/png;base64, ${responseData.base64QR.qrImage}`}
             alt="Red dot"
           />
           <Information
             datas={[
               { title: "ไปยังบัญชี", content: "นายพล เลิศสุธากุล" },
-              { title: "จำนวนเงิน", content: (+information.amount).toFixed(2) },
-              { title: "Ref1 Number", content: information.refs.ref1 },
+              {
+                title: "จำนวนเงิน",
+                content: (+responseData.amount).toFixed(2),
+              },
+              { title: "Ref1 Number", content: responseData.refs.ref1 },
               { title: "ช่องทางการชำระเงิน", content: "Test" },
             ]}
             // titleColor={}
