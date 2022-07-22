@@ -33,6 +33,12 @@
   @apply text-primary600;
 }
 
+.btn-outline {
+  background-color: transparent;
+  @apply text-primary600;
+  border: 1px solid #64748b;
+}
+
 .page-header {
   @apply font-semibold text-center text-xl leading-6;
 }
