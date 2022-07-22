@@ -28,7 +28,7 @@ const Payment = () => {
   return (
     <div
       className="flex flex-col items-start 
-                h-full w-full"
+                h-full w-full mx-8"
     >
       <PageHeader classes="mt-6 mb-4" content="รายละเอียดการใช้งาน" />
       <section className="font-medium text-lg grid grid-cols-2 leading-5 my-3 gap-2">

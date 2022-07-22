@@ -22,7 +22,7 @@ const Machine = () => {
   return isLoading ? (
     <Loading />
   ) : (
-    <div className="flex flex-col h-full w-full justify-center items-center">
+    <div className="flex flex-col h-full w-full justify-center items-center mx-8">
       {machine ? (
         <>
           <PageHeader content="ยืนยันการเลือกเครื่อง" classes="m-6" />

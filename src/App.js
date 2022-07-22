@@ -20,7 +20,7 @@ function App() {
               <span className="text-[#4B5768]">Express</span>
             </Link>
           </header>
-          <main className="mt-6 pt-6 pb-10 px-8 h-full w-full">
+          <main className="mt-6 pt-6 pb-10 h-full w-full">
             <Routes>
               <Route
                 index

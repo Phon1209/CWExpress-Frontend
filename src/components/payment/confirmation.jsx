@@ -97,7 +97,7 @@ const ConfirmationPage = (props) => {
   return (
     <div
       className="flex flex-col items-center 
-                h-full w-full"
+                h-full w-full mx-8"
     >
       <div
         className="self-start flex mt-6 mb-4 items-center"
