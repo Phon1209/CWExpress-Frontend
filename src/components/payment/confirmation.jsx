@@ -67,9 +67,14 @@ const ConfirmationPage = (props) => {
             response.status === 200 &&
             response.data.amount === +responseData.amount
           ) {
-            const { fulfilledAt, amount } = response.data;
+            const { fulfilledAt, amount, transactionID } = response.data;
             navigate("/success", {
-              state: { fulfilledAt, amount, payment: payment.name },
+              state: {
+                fulfilledAt,
+                amount,
+                payment: payment.name,
+                transactionID,
+              },
             });
           }
         })
