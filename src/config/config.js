@@ -6,5 +6,3 @@ const SERVER_URL =
     : process.env.REACT_APP_CWEX_SERVER;
 
 export const Axios = axios.create({ baseURL: `${SERVER_URL}/cwex/v1` });
-
-export const STREAM_URL = `${SERVER_URL}/cwex/v1/stream`;
