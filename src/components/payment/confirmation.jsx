@@ -37,7 +37,6 @@ const ConfirmationPage = (props) => {
   }, []);
 
   // /*
-  // @TODO: polling data from "/order/check"
   useEffect(() => {
     // polling every 10 seconds
     const pollingRate = 10;
@@ -128,9 +127,8 @@ const ConfirmationPage = (props) => {
                 content: (+responseData.amount).toFixed(2),
               },
               { title: "Ref1 Number", content: responseData.refs.ref1 },
-              { title: "ช่องทางการชำระเงิน", content: "Test" },
+              { title: "ช่องทางการชำระเงิน", content: payment.name },
             ]}
-            // titleColor={}
           />
           <p className="my-auto text-center">
             โปรดชำระเงินภายใน{" "}

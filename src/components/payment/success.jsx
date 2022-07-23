@@ -1,30 +1,22 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate, Navigate } from "react-router";
 import { useAppContext } from "../../context/appContext";
 import Information from "../layouts/information";
 import PageHeader from "../layouts/pageHeader";
 import Button from "../utils/button";
 import SuccessImage from "../utils/assets/success.svg";
+import { dateFormat } from "../utils/date";
 
-const SuccessPayment = (props) => {
+const SuccessPayment = () => {
   const { reset } = useAppContext();
 
-  // const { machine } = useAppContext();
-  // const { state } = useLocation();
+  const { machine } = useAppContext();
+  const { state } = useLocation();
   const navigate = useNavigate();
 
-  const machine = {
-    location: "Test",
-    branch: "Test",
-    machineNumber: 0,
-    _id: 2,
-  };
-  const state = {
-    fulfilledAt: "19/04/2022 12:43",
-    amount: "10",
-    payment: "Test QR Code",
-    transactionID: "h87f34",
-  };
+  if (machine === null || state === null) {
+    return <Navigate to="/" replace />;
+  }
 
   const { fulfilledAt, amount, payment: paymentMethod, transactionID } = state;
   const { location, branch, machineNumber, _id } = machine;
@@ -43,8 +35,8 @@ const SuccessPayment = (props) => {
       <section>
         <Information
           datas={[
-            { title: "เวลา", content: fulfilledAt },
-            { title: "จำนวนเงิน", content: `${amount} บาท` },
+            { title: "เวลา", content: dateFormat(new Date(fulfilledAt)) },
+            { title: "จำนวนเงิน", content: `${(+amount).toFixed(2)} บาท` },
             { title: "ช่องทางการชำระเงิน", content: paymentMethod },
           ]}
           titleColor="primary500"
