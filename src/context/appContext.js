@@ -3,6 +3,7 @@ import { Axios } from "../config/config";
 import {
   LOADING,
   PAYMENT_FAIL,
+  RESET,
   SET_MACHINE,
   SET_PAYMENT,
   SET_RESPONSE,
@@ -68,6 +69,8 @@ const AppProvider = (props) => {
     }
   };
 
+  const reset = () => dispatch({ type: RESET });
+
   return (
     <AppContext.Provider
       value={{
@@ -78,6 +81,7 @@ const AppProvider = (props) => {
         setAmount,
         setLoading,
         executeAction,
+        reset,
       }}
     >
       {props.children}

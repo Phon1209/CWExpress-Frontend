@@ -5,6 +5,7 @@ import {
   SET_MACHINE,
   SET_RESPONSE,
   LOADING,
+  RESET,
 } from "./actions";
 
 export const appReducer = (state, action) => {
@@ -27,6 +28,15 @@ export const appReducer = (state, action) => {
       return { ...state, error: action.payload, isLoading: false };
     case LOADING:
       return { ...state, isLoading: true };
+    case RESET:
+      return {
+        isLoading: true,
+        machine: null,
+        payment: null,
+        error: null,
+        responseData: null,
+      };
+
     default:
       return state;
   }
