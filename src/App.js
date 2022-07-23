@@ -4,6 +4,7 @@ import Machine from "./components/machine/machine";
 import Payment from "./components/payment/payment";
 import ConfirmationPage from "./components/payment/confirmation";
 import Success from "./components/payment/success";
+import Homepage from "./components/pages/homepage";
 
 function App() {
   return (
@@ -29,10 +30,7 @@ function App() {
                   </div>
                 }
               >
-                <Route
-                  index
-                  element={<h1 className="text-3xl text-center">สวัสดี</h1>}
-                />
+                <Route index element={<Homepage />} />
                 <Route path="machines">
                   <Route path=":machineID" element={<Machine />} />
                 </Route>
