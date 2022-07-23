@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, Outlet } from "react-router-dom";
 import AppProvider from "./context/appContext";
 import Machine from "./components/machine/machine";
 import Payment from "./components/payment/payment";
@@ -23,14 +23,22 @@ function App() {
           <main className="mt-6 pt-6 pb-10 h-full w-full">
             <Routes>
               <Route
-                index
-                element={<h1 className="text-3xl text-center">สวัสดี</h1>}
-              />
-              <Route path="machines">
-                <Route path=":machineID" element={<Machine />} />
+                element={
+                  <div className="px-8 h-full w-full">
+                    <Outlet />
+                  </div>
+                }
+              >
+                <Route
+                  index
+                  element={<h1 className="text-3xl text-center">สวัสดี</h1>}
+                />
+                <Route path="machines">
+                  <Route path=":machineID" element={<Machine />} />
+                </Route>
+                <Route path="payment" element={<Payment />} />
+                <Route path="confirm" element={<ConfirmationPage />} />
               </Route>
-              <Route path="payment" element={<Payment />} />
-              <Route path="confirm" element={<ConfirmationPage />} />
               <Route path="success" element={<Success />} />
               <Route path="*" />
             </Routes>
