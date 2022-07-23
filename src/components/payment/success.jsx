@@ -1,16 +1,24 @@
 import React from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useAppContext } from "../../context/appContext";
 import Information from "../layouts/information";
-// import PropTypes from "prop-types";
 import PageHeader from "../layouts/pageHeader";
 import Button from "../utils/button";
 import SuccessImage from "../utils/assets/success.svg";
 
 const SuccessPayment = (props) => {
+  const { reset } = useAppContext();
+
   // const { machine } = useAppContext();
   // const { state } = useLocation();
-  const machine = { location: "Test", branch: "Test", machineNumber: 2 };
+  const navigate = useNavigate();
+
+  const machine = {
+    location: "Test",
+    branch: "Test",
+    machineNumber: 0,
+    _id: 2,
+  };
   const state = {
     fulfilledAt: "19/04/2022 12:43",
     amount: "10",
@@ -19,6 +27,7 @@ const SuccessPayment = (props) => {
   };
 
   const { fulfilledAt, amount, payment: paymentMethod, transactionID } = state;
+  const { location, branch, machineNumber, _id } = machine;
 
   return (
     <div
@@ -47,9 +56,9 @@ const SuccessPayment = (props) => {
         <span className="font-semibold text-base">รายละเอียดเครื่อง</span>
         <Information
           datas={[
-            { title: "จังหวัด", content: machine.location },
-            { title: "สาขา", content: machine.branch },
-            { title: "หมายเลขเครื่อง", content: machine.machineNumber },
+            { title: "จังหวัด", content: location },
+            { title: "สาขา", content: branch },
+            { title: "หมายเลขเครื่อง", content: machineNumber },
           ]}
           classes="mt-4"
           lightTitle={true}
@@ -59,13 +68,19 @@ const SuccessPayment = (props) => {
         <Button
           classes="btn-outline py-2 w-full mx-2"
           content="กลับไปหน้าหลัก"
+          onClick={() => {
+            reset();
+            navigate("/", { replace: true });
+          }}
         />
-        <Button classes="btn-fill py-2 w-full mx-2" content="ใช้งานอีกครั้ง" />
+        <Button
+          classes="btn-fill py-2 w-full mx-2"
+          content="ใช้งานอีกครั้ง"
+          onClick={() => navigate(`/machines/${_id}`)}
+        />
       </section>
     </div>
   );
 };
-
-// SuccessPayment.propTypes = {};
 
 export default SuccessPayment;
