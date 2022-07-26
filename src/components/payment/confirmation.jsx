@@ -7,6 +7,7 @@ import { useAppContext } from "../../context/appContext";
 import { Axios } from "../../config/config";
 import Loading from "../utils/loading";
 import Countdown from "../utils/countdown";
+import Alert from "../layouts/alert";
 
 const ConfirmationPage = (props) => {
   console.log("Rendering Confirmation Page");
@@ -18,6 +19,7 @@ const ConfirmationPage = (props) => {
     executeAction,
     setLoading,
     isLoading,
+    setInfo,
   } = useAppContext();
 
   const navigate = useNavigate();
@@ -32,6 +34,7 @@ const ConfirmationPage = (props) => {
       console.log("QRCODE asked");
       setLoading();
       executeAction(payment.action, _id, payment.amount);
+      setInfo("สามารถสแกน QRcode ที่เครื่องได้เช่นกัน");
     } catch (err) {
       console.error(err);
       console.info("requesting data error");
@@ -119,31 +122,43 @@ const ConfirmationPage = (props) => {
       </div>
       {responseData && (
         <>
+          <Alert />
           <img
             className="my-2 w-64 h-64 bg-black"
             src={`data:image/png;base64, ${responseData.base64QR.qrImage}`}
             alt="Red dot"
           />
-          <Information
-            datas={[
-              { title: "ไปยังบัญชี", content: "นายพล เลิศสุธากุล" },
-              {
-                title: "จำนวนเงิน",
-                content: (+responseData.amount).toFixed(2),
-              },
-              { title: "Ref1 Number", content: responseData.refs.ref1 },
-              { title: "ช่องทางการชำระเงิน", content: payment.name },
-            ]}
-            lightTitle={true}
-          />
-          <p className="my-auto text-center">
-            โปรดชำระเงินภายใน{" "}
-            <Countdown
-              startTime={300}
-              endCallback={() => navigate(`/machines/${_id}`)}
-            />{" "}
-            วินาที
-          </p>
+          <section className="mt-3">
+            <header className="text-lg font-bold text-center">
+              กรุณาสแกนคิวอาร์ เพื่อชำระเงิน
+            </header>
+            <Information
+              datas={[
+                { title: "ไปยังบัญชี", content: "นายพล เลิศสุธากุล" },
+                {
+                  title: "จำนวนเงิน",
+                  content: `${(+responseData.amount).toFixed(2)} บาท`,
+                },
+                { title: "Ref1 Number", content: responseData.refs.ref1 },
+                { title: "ช่องทางการชำระเงิน", content: payment.name },
+              ]}
+              lightTitle={true}
+            />
+          </section>
+          <section className="mt-auto mb-12">
+            <p className="text-center my-8">
+              โปรดชำระเงินภายใน{" "}
+              <Countdown
+                startTime={300}
+                endCallback={() => navigate(`/machines/${_id}`)}
+              />{" "}
+              วินาที
+            </p>
+            <div className="text-center">
+              <p>กรุณาอย่าปิดบราว์เซอร์ หรือทำการรีเฟรช</p>
+              <p>หลังจากชำระเงินเสร็จแล้ว ระบบจะทำการพาคุณไปหน้ายืนยัน</p>
+            </div>
+          </section>
         </>
       )}
     </div>

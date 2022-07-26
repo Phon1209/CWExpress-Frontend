@@ -6,3 +6,4 @@ const SERVER_URL =
     : process.env.REACT_APP_CWEX_SERVER;
 
 export const Axios = axios.create({ baseURL: `${SERVER_URL}/cwex/v1` });
+export const MACHINE_ZERO = 4;

@@ -5,6 +5,8 @@ import PaymentOptions from "./paymentOptions";
 import PageHeader from "../layouts/pageHeader";
 import Button from "../utils/button";
 import { useAppContext } from "../../context/appContext";
+import { leadingZero } from "../utils";
+import { MACHINE_ZERO } from "../../config/config";
 
 const Payment = () => {
   const { state } = useLocation();
@@ -35,7 +37,7 @@ const Payment = () => {
         <div className="mr-5">หมายเลขเครื่อง</div>
         <p>{machineNumber}</p>
         <div className="mr-5">รหัสประจำเครื่อง</div>
-        <p>{_id}</p>
+        <p>{leadingZero(_id, MACHINE_ZERO)}</p>
       </section>
       <AmountSelect setAmount={setAmount} amount={payment?.amount} />
       <section className="w-full mb-4">
