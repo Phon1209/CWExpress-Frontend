@@ -6,6 +6,7 @@ import {
   SET_RESPONSE,
   LOADING,
   RESET,
+  SET_INFO,
 } from "./actions";
 
 export const appReducer = (state, action) => {
@@ -25,7 +26,13 @@ export const appReducer = (state, action) => {
     case PAYMENT_SUCCESS:
       return { ...state };
     case PAYMENT_FAIL:
-      return { ...state, error: action.payload, isLoading: false };
+      return {
+        ...state,
+        alert: { type: "error", content: action.payload },
+        isLoading: false,
+      };
+    case SET_INFO:
+      return { ...state, alert: { type: "info", content: action.payload } };
     case LOADING:
       return { ...state, isLoading: true };
     case RESET:
@@ -33,7 +40,7 @@ export const appReducer = (state, action) => {
         isLoading: true,
         machine: null,
         payment: null,
-        error: null,
+        alert: null,
         responseData: null,
       };
 

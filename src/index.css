@@ -46,3 +46,16 @@
 .paymentChoice svg {
   @apply text-2xl;
 }
+
+.alert {
+  @apply text-base p-4 flex items-center rounded-md;
+}
+
+.alert span {
+  @apply text-black;
+}
+
+.alert-info {
+  @apply bg-[#F6FDFF] text-[#5C5F62];
+  border: 1px solid #aec3d3;
+}

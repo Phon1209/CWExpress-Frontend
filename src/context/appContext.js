@@ -4,6 +4,7 @@ import {
   LOADING,
   PAYMENT_FAIL,
   RESET,
+  SET_INFO,
   SET_MACHINE,
   SET_PAYMENT,
   SET_RESPONSE,
@@ -14,7 +15,7 @@ const initialState = {
   isLoading: true,
   machine: null,
   payment: null,
-  error: null,
+  alert: null,
   responseData: null,
 };
 
@@ -53,6 +54,11 @@ const AppProvider = (props) => {
     });
   };
 
+  const setInfo = (content) => {
+    console.log("Set Info: ", content);
+    dispatch({ type: SET_INFO, payload: content });
+  };
+
   const setLoading = () => {
     dispatch({ type: LOADING });
   };
@@ -82,6 +88,7 @@ const AppProvider = (props) => {
         setLoading,
         executeAction,
         reset,
+        setInfo,
       }}
     >
       {props.children}
