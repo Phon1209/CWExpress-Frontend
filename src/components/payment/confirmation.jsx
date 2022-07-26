@@ -19,19 +19,23 @@ const ConfirmationPage = (props) => {
     setLoading,
     isLoading,
   } = useAppContext();
-  const { state } = useLocation();
-  const { _id } = state;
 
   const navigate = useNavigate();
+  const { state } = useLocation();
+
+  const _id = state?._id;
 
   useEffect(() => {
     // @TODO: request QR code
     try {
+      if (_id === undefined) throw new Error("doesn't provide machineID");
       console.log("QRCODE asked");
       setLoading();
       executeAction(payment.action, _id, payment.amount);
     } catch (err) {
       console.error(err);
+      console.info("requesting data error");
+      navigate("/", { replace: true });
     }
     // eslint-disable-next-line
   }, []);
@@ -92,6 +96,7 @@ const ConfirmationPage = (props) => {
   // Rendering
   // User refresh the page
   if (machine === null || payment === null) {
+    if (!_id) return <Navigate to="/" replace />;
     return <Navigate to={`/machines/${_id}`} replace />;
   }
 
@@ -129,6 +134,7 @@ const ConfirmationPage = (props) => {
               { title: "Ref1 Number", content: responseData.refs.ref1 },
               { title: "ช่องทางการชำระเงิน", content: payment.name },
             ]}
+            lightTitle={true}
           />
           <p className="my-auto text-center">
             โปรดชำระเงินภายใน{" "}
